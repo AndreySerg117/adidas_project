@@ -1,1 +1,3 @@
-print(333333333333333333333)
+from app_factory import get_application
+
+app = get_application()
