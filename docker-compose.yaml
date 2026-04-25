@@ -11,6 +11,8 @@ x-service-backend-adidas: &service-backend-adidas
     - ./backend/app:/app
   networks:
     - main_network
+  env_file:
+    - .env
 
 services:
   backend_adidas:
