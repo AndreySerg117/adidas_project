@@ -3,7 +3,7 @@ FROM python:3.12-slim
 WORKDIR /app
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends make curl \
+    && apt-get install -y --no-install-recommends make curl gettext \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh \
@@ -15,6 +15,8 @@ COPY pyproject.toml uv.lock /app/
 RUN uv pip install --system --no-cache .
 
 COPY /app /app
+
+RUN make lang-mo
 
 EXPOSE 20000
 

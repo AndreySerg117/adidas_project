@@ -1,8 +1,12 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 import socket
 from services.betterstack import betterstack_log
 from random import randint
 import cProfile
+import socket
+from random import randint
+
+from dependencies.i18n import get_gettext
 
 info_router = APIRouter()
 
@@ -12,8 +16,9 @@ async def hard_calculations():
 
 
 @info_router.get("/backend")
-async def get_backend_info():
-    result = {"backend": socket.gethostname()}
+async def get_backend_info(_=Depends(get_gettext)):
+    result = {"backend": socket.gethostname(), "translated": _("Hello123"),
+              "translated2": _("ldfhgjdfklhgkjdfhgkjdfhkgjdfhkg dfkjghkdfhgjhing")}
     betterstack_log.info('hello, first log', extra=result)
     betterstack_log.debug('hello, first log', extra={"debug": 44})
     return result
@@ -26,5 +31,5 @@ async def profile_me():
     await hard_calculations()
     pr.disable()
     pr.print_stats(sort="cumulative")  # Sort by cumulative time to identify bottlenecks
-    betterstack_log.warning('hello, first log', extra={"no_way": randint(1, 50)})
+    betterstack_log.warning("hello, first log", extra={"no_way": randint(1, 50)})
     return {}
