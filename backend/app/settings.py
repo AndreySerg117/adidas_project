@@ -7,8 +7,14 @@ class LoggerSettings(BaseSettings):
     BETTERSTACK_HOST: str
 
 
+class I18nSettings(BaseSettings):
+    SUPPORTED_LANGUAGES: list[str] = ["en", "uk", "ru", "it"]
+    DEFAULT_LANGUAGE: str = "en"
+    LANGUAGE_HEADER: str = "Accept-Language"
+
+
 class Settings(
-    LoggerSettings
+    LoggerSettings, I18nSettings
 ):
     pass
 
